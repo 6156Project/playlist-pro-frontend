@@ -9,14 +9,14 @@ import API from './api-service';
 
 function App() {
   // Can use these variables for testing purposes locally
-  const [playlists, setPlaylists] = useState([{"id":123, "name":"Jesse's Playlist"},{"id":123, "name":"Jesse's Playlist"},{"id":123, "name":"Jesse's Playlist"}]);
-  const [selectedPlaylistSongs, setSelectedPlaylistSongs] = useState([{"songId":1},{"songId":2},{"songId":3}]);
+  // const [playlists, setPlaylists] = useState([{"id":123, "name":"Jesse's Playlist"},{"id":123, "name":"Jesse's Playlist"},{"id":123, "name":"Jesse's Playlist"}]);
+  // const [selectedPlaylistSongs, setSelectedPlaylistSongs] = useState([{"songId":1},{"songId":2},{"songId":3}]);
 
-  // const [playlists, setPlaylists] = useState([]);
+  const [playlists, setPlaylists] = useState([]);
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
 
-  // const [selectedPlaylistSongs, setSelectedPlaylistSongs] = useState([]);
+  const [selectedPlaylistSongs, setSelectedPlaylistSongs] = useState([]);
   const [editedPlaylist, setEditedPlaylist] = useState(null);
   const [songPageNumber, setSongPageNumber] = useState(1);
 
