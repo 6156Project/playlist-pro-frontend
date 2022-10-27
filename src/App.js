@@ -7,11 +7,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMusic, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
+  // Can use these variables for testing purposes locally
+  // const [playlists, setPlaylists] = useState([{"id":123, "name":"Jesse's Playlist"},{"id":123, "name":"Jesse's Playlist"},{"id":123, "name":"Jesse's Playlist"}]);
+  // const [selectedPlaylistSongs, setSelectedPlaylistSongs] = useState([{"songId":1},{"songId":2},{"songId":3}]);
 
-  const [playlists, setPlaylists] = useState([{"id":123, "name":"Jesse's Playlist"},{"id":123, "name":"Jesse's Playlist"},{"id":123, "name":"Jesse's Playlist"}]);
+  const [playlists, setPlaylists] = useState([]);
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
-  const [selectedPlaylistSongs, setSelectedPlaylistSongs] = useState([{"songId":1},{"songId":2},{"songId":3}]);
+
+  const [selectedPlaylistSongs, setSelectedPlaylistSongs] = useState([]);
   const [editedPlaylist, setEditedPlaylist] = useState(null);
 
   const baseUrl = "http://127.0.0.1:5011/" //Needs to be changed depending on what microservice is being called/where it is being called
