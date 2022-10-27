@@ -6,15 +6,14 @@ function PlaylistDetails(props) {
         <React.Fragment>
             {props.playlist ? (
             <div>
-            <h1>Seleted Playlist: {props.playlist.name}</h1>
-                <h1></h1>
-                { props.playlistSongs && props.playlistSongs.map( songs => { 
-                  return (
-                    <div key={songs.songId}>
-                        <h2>{songs.songId}</h2>
-                    </div>
-                  )
-                })}
+                <h1>Selected Playlist:<br/>{props.playlist.name}</h1>
+                    { props.playlistSongs && props.playlistSongs.map( song => {
+                      return (
+                        <div key={song.songId}>
+                            <h2>{song.songId}</h2>
+                        </div>
+                      )
+                    })}
             </div>
             ): null}
         </React.Fragment >

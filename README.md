@@ -1,3 +1,9 @@
+## Quick Guide
+1. Install npm - https://nodejs.org/en/download/
+2. cd into this directory, `npm install`
+3. then build `npm run build`
+4. then start the server `npm start`. See other commands below.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -1,15 +1,17 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import PlaylistList from './components/playlist-list';
 import PlaylistDetails from './components/playlist-details';
 import PlaylistForm from './components/playlist-form';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMusic, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
 
-  const [playlists, setPlaylists] = useState([]);
+  const [playlists, setPlaylists] = useState([{"id":123, "name":"Jesse's Playlist"},{"id":123, "name":"Jesse's Playlist"},{"id":123, "name":"Jesse's Playlist"}]);
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
-  const [selectedPlaylistSongs, setSelectedPlaylistSongs] = useState([]);
+  const [selectedPlaylistSongs, setSelectedPlaylistSongs] = useState([{"songId":1},{"songId":2},{"songId":3}]);
   const [editedPlaylist, setEditedPlaylist] = useState(null);
 
   const baseUrl = "http://127.0.0.1:5011/" //Needs to be changed depending on what microservice is being called/where it is being called
@@ -82,21 +84,26 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Playlist Pro</h1>
-      </header>
-      <div className="layout">
-        <div>
-          <button onClick={ newPlaylist}>New Playlist</button>
-          <PlaylistList playlists={playlists} playlistClicked={playlistClicked} editClicked={editClicked} removeClicked={removeClicked}/>
+      <div className="App-background">
+        <div className="App">
+          <header className="App-header">
+            <h1><FontAwesomeIcon icon={faMusic} /> Playlist Pro</h1>
+          </header>
+          <div className="horizontal-rule"></div>
+          <div className="layout">
+            <div className="layout-left">
+              <div className="App-button" onClick={ newPlaylist }><FontAwesomeIcon icon={faPlus}/> New Playlist</div>
+              <PlaylistList playlists={playlists} playlistClicked={playlistClicked} editClicked={editClicked} removeClicked={removeClicked}/>
+            </div>
+            <div className="layout-right">
+              <PlaylistDetails playlist={selectedPlaylist} playlistSongs={selectedPlaylistSongs} />
+              { editedPlaylist ?
+                  <PlaylistForm playlist={editedPlaylist} updatedPlaylist={updatedPlaylist} playlistCreated={playlistCreated}/>
+                  : null }
+            </div>
+          </div>
         </div>
-        <PlaylistDetails playlist={selectedPlaylist} playlistSongs={selectedPlaylistSongs} />
-        { editedPlaylist ? 
-        <PlaylistForm playlist={editedPlaylist} updatedPlaylist={updatedPlaylist} playlistCreated={playlistCreated}/> 
-        : null }
       </div>
-    </div>
   );
 }
 
