@@ -1,47 +1,48 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import PlaylistList from './components/playlist-list';
 import PlaylistDetails from './components/playlist-details';
 import PlaylistForm from './components/playlist-form';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMusic, faPlus } from '@fortawesome/free-solid-svg-icons';
+import API from './api-service';
 
 function App() {
+  // Can use these variables for testing purposes locally
+  // const [playlists, setPlaylists] = useState([{"id":123, "name":"Jesse's Playlist"},{"id":123, "name":"Jesse's Playlist"},{"id":123, "name":"Jesse's Playlist"}]);
+  // const [selectedPlaylistSongs, setSelectedPlaylistSongs] = useState([{"songId":1},{"songId":2},{"songId":3}]);
 
   const [playlists, setPlaylists] = useState([]);
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
+
   const [selectedPlaylistSongs, setSelectedPlaylistSongs] = useState([]);
   const [editedPlaylist, setEditedPlaylist] = useState(null);
-
-  const baseUrl = "http://127.0.0.1:5011/" //Needs to be changed depending on what microservice is being called/where it is being called
+  const [songPageNumber, setSongPageNumber] = useState(1);
 
   useEffect(()=> {
-    fetch(`${baseUrl}api/playlists`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then( resp => resp.json())
+    // get up-to-date playlists from microservice
+    API.getPlaylists()
     .then( resp => setPlaylists(resp))
     .catch( error => console.log(error))
 
-    fetch(`${baseUrl}api/playlists/${selectedPlaylistId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then( resp => resp.json())
-    .then( resp => setSelectedPlaylistSongs(resp))
-    .catch( error => console.log(error))
-
-    
+    // TODO: delete me if we end up using L41 pagination pattern
+    // WITHOUT using pagination, get songs from the selected playlist
+    // API.getSongs(selectedPlaylistId)
+    // .then( resp => setSelectedPlaylistSongs(resp))
+    // .catch( error => console.log(error))
   }, [selectedPlaylistId])
 
   const playlistClicked = playlist => {
     setSelectedPlaylist(playlist);
     setSelectedPlaylistId(playlist.id);
     setEditedPlaylist(null);
+
+    // using pagination, get songs from the selected playlist
+    setSongPageNumber(1) // reset page num to 1
+    API.getSongsWithPagination(selectedPlaylistId, songPageNumber)
+        .then( resp => addMoreSongs(resp))
+        .catch( error => console.log(error))
   }
 
   const editClicked = playlist => {
@@ -71,6 +72,11 @@ function App() {
     setPlaylists(newPlaylists);
   }
 
+  const addMoreSongs = song => {
+    const newSongs = [...selectedPlaylistSongs, song];
+    setSelectedPlaylistSongs(newSongs)
+  }
+
   const removeClicked = playlist => {
     const newPlaylists = playlists.filter( play => {
       if (play.id === playlist.id) {
@@ -82,21 +88,26 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Playlist Pro</h1>
-      </header>
-      <div className="layout">
-        <div>
-          <button onClick={ newPlaylist}>New Playlist</button>
-          <PlaylistList playlists={playlists} playlistClicked={playlistClicked} editClicked={editClicked} removeClicked={removeClicked}/>
+      <div className="App-background">
+        <div className="App">
+          <header className="App-header">
+            <h1><FontAwesomeIcon icon={faMusic} /> Playlist Pro</h1>
+          </header>
+          <div className="horizontal-rule"></div>
+          <div className="layout">
+            <div className="layout-left">
+              <div className="App-button" onClick={ newPlaylist }><FontAwesomeIcon icon={faPlus}/> New Playlist</div>
+              <PlaylistList playlists={playlists} playlistClicked={playlistClicked} editClicked={editClicked} removeClicked={removeClicked}/>
+            </div>
+            <div className="layout-right">
+              <PlaylistDetails playlist={selectedPlaylist} playlistSongs={selectedPlaylistSongs} songPageNumber={songPageNumber} setSongPageNumber={setSongPageNumber} />
+              { editedPlaylist ?
+                  <PlaylistForm playlist={editedPlaylist} updatedPlaylist={updatedPlaylist} playlistCreated={playlistCreated}/>
+                  : null }
+            </div>
+          </div>
         </div>
-        <PlaylistDetails playlist={selectedPlaylist} playlistSongs={selectedPlaylistSongs} />
-        { editedPlaylist ? 
-        <PlaylistForm playlist={editedPlaylist} updatedPlaylist={updatedPlaylist} playlistCreated={playlistCreated}/> 
-        : null }
       </div>
-    </div>
   );
 }
 

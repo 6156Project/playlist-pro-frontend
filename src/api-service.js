@@ -1,7 +1,46 @@
-const baseUrl = "http://127.0.0.1:5011/" 
-
+// Needs to be changed depending on what microservice is being called/where it is being called
+const baseUrl = "http://127.0.0.1:5011/"
 
 export default class API {
+    static getPlaylists() {
+        return fetch(`${baseUrl}api/playlists`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then( resp => resp.json())
+    }
+
+    static getPlaylistsWithPagination(page) {
+        return fetch(`${baseUrl}api/playlists&page=${page}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then( resp => resp.json())
+    }
+
+    static getSongs(selectedPlaylistId) {
+        return fetch(`${baseUrl}api/playlists/${selectedPlaylistId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then( resp => resp.json())
+    }
+
+    static getSongsWithPagination(selectedPlaylistId, page) {
+        return fetch(`${baseUrl}api/playlists/${selectedPlaylistId}&page=${page}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then( resp => resp.json())
+    }
 
     static updatePlaylist(selectedPlaylistId, body) {
         return fetch(`${baseUrl}api/playlists/${selectedPlaylistId}`, {
@@ -33,5 +72,4 @@ export default class API {
             },
           })
     }
-
 }
