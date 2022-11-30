@@ -2,22 +2,15 @@ import React from 'react';
 import API  from '../api-service';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-    faArrowRight,
-    faArrowsTurnRight,
-    faMusic,
-    faPlus,
-    faTentArrowLeftRight
+    faArrowRight
 } from "@fortawesome/free-solid-svg-icons";
-import PlaylistList from "./playlist-list";
-import PlaylistDetails from "./playlist-details";
-import PlaylistForm from "./playlist-form";
 
 
-function Login(props) {
+function Login() {
     const loginClicked = () => {
         API.login()
             .then()
-            .catch(error => console.log())
+            .catch(() => console.log())
     }
 
     return (

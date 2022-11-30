@@ -4,7 +4,7 @@ import PlaylistList from './playlist-list';
 import PlaylistDetails from './playlist-details';
 import PlaylistForm from './playlist-form';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMusic, faPlus } from '@fortawesome/free-solid-svg-icons';
+import {faArrowRight, faMusic, faPlus} from '@fortawesome/free-solid-svg-icons';
 import API from '../api-service';
 
 function Home() {
@@ -19,8 +19,6 @@ function Home() {
     // const [selectedPlaylistSongs, setSelectedPlaylistSongs] = useState([]);
     const [editedPlaylist, setEditedPlaylist] = useState(null);
     const [songPageNumber, setSongPageNumber] = useState(1);
-
-    const loggedIn = useState(false)
 
     useEffect(()=> {
         // get up-to-date playlists from microservice
@@ -89,11 +87,18 @@ function Home() {
         setPlaylists(newPlaylists);
     }
 
+    const logout = () => {
+
+    }
+
     return (
         <div className="App-background">
             <div className="App">
                 <header className="App-header">
-                    <h1><FontAwesomeIcon icon={faMusic} /> Playlist Pro</h1>
+                    <div className="header-content">
+                        <h1><FontAwesomeIcon icon={faMusic} /> Playlist Pro</h1>
+                        <div className="logout-button"> <div className="App-button" onClick={ logout }><FontAwesomeIcon icon={faArrowRight}/> Logout</div> </div>
+                    </div>
                 </header>
                 <div className="horizontal-rule"></div>
                 <div className="layout">

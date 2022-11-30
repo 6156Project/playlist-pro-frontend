@@ -78,6 +78,23 @@
   justify-content: center;
 }
 
+.logout-button {
+  align-items: end;
+  justify-content: end;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* source for side bar animations: https://www.gradient-animator.com/ */
 .App-background {
   background: linear-gradient(237deg, #14a42a, #1faed4);
