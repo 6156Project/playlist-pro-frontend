@@ -14,8 +14,7 @@
 .App-button {
   text-align: center;
   background-color: green;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding: 1rem;
   margin: 1rem 5rem;
 }
 
@@ -71,6 +70,29 @@
   color: red;
   cursor: pointer;
   padding: 0.25rem 0.25rem;
+}
+
+.login-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logout-button {
+  align-items: end;
+  justify-content: end;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* source for side bar animations: https://www.gradient-animator.com/ */
