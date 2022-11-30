@@ -6,6 +6,7 @@ import PlaylistForm from './playlist-form';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faArrowRight, faMusic, faPlus} from '@fortawesome/free-solid-svg-icons';
 import API from '../api-service';
+import Login from "./login";
 
 function Home() {
     // Can use these variables for testing purposes locally
@@ -19,6 +20,7 @@ function Home() {
     // const [selectedPlaylistSongs, setSelectedPlaylistSongs] = useState([]);
     const [editedPlaylist, setEditedPlaylist] = useState(null);
     const [songPageNumber, setSongPageNumber] = useState(1);
+    const [token, setToken] = useState(false);
 
     useEffect(()=> {
         // get up-to-date playlists from microservice
@@ -87,8 +89,15 @@ function Home() {
         setPlaylists(newPlaylists);
     }
 
-    const logout = () => {
+    const logoutClicked = () => {
+        API.logout()
+            .then(() => setToken(false))
+            .catch(() => console.log())
+    }
 
+
+    if(!token) {
+        return <Login setToken={setToken} />
     }
 
     return (
@@ -97,7 +106,7 @@ function Home() {
                 <header className="App-header">
                     <div className="header-content">
                         <h1><FontAwesomeIcon icon={faMusic} /> Playlist Pro</h1>
-                        <div className="logout-button"> <div className="App-button" onClick={ logout }><FontAwesomeIcon icon={faArrowRight}/> Logout</div> </div>
+                        <div className="logout-button"> <div className="App-button" onClick={ logoutClicked }><FontAwesomeIcon icon={faArrowRight}/> Logout</div> </div>
                     </div>
                 </header>
                 <div className="horizontal-rule"></div>
