@@ -87,8 +87,10 @@ function Home() {
         setPlaylists(newPlaylists);
     }
 
-    const logout = () => {
-
+    const logoutClicked = () => {
+        API.logout()
+            .then()
+            .catch(() => console.log())
     }
 
     return (
@@ -97,7 +99,7 @@ function Home() {
                 <header className="App-header">
                     <div className="header-content">
                         <h1><FontAwesomeIcon icon={faMusic} /> Playlist Pro</h1>
-                        <div className="logout-button"> <div className="App-button" onClick={ logout }><FontAwesomeIcon icon={faArrowRight}/> Logout</div> </div>
+                        <div className="logout-button"> <div className="App-button" onClick={ logoutClicked }><FontAwesomeIcon icon={faArrowRight}/> Logout</div> </div>
                     </div>
                 </header>
                 <div className="horizontal-rule"></div>
