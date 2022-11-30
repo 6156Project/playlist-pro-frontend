@@ -76,7 +76,7 @@ export default class API {
     }
 
     static login() {
-        return fetch(`${baseUrl}/login`, {
+        return fetch(`${baseUrl}login`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -85,7 +85,7 @@ export default class API {
     }
 
     static logout() {
-        return fetch(`${baseUrl}/logout`, {
+        return fetch(`${baseUrl}logout`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

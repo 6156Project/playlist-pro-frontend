@@ -6,10 +6,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 
-function Login() {
+function Login({ setToken }) {
     const loginClicked = () => {
         API.login()
-            .then()
+            .then(() => setToken(true))
             .catch(() => console.log())
     }
 
