@@ -91,7 +91,7 @@ function Home() {
 
     const logoutClicked = () => {
         API.logout()
-            .then(() => setToken(false))
+            //.then(() => setToken(false))
             .catch(() => console.log())
     }
 
