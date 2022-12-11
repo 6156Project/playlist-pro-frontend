@@ -1,7 +1,7 @@
 // Needs to be changed depending on what microservice is being called/where it is being called
 
-const baseUrl = "http://127.0.0.1:5011/" //Local Dev
-//const baseUrl = "https://80exsb2z98.execute-api.us-east-1.amazonaws.com/dev/"  //Dev API gateway
+//const baseUrl = "http://127.0.0.1:5011/" //Local Dev
+const baseUrl = "https://80exsb2z98.execute-api.us-east-1.amazonaws.com/dev/"  //Dev API gateway
 
 export default class API {
     static getPlaylists() {
