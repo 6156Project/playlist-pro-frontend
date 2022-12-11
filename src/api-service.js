@@ -1,14 +1,17 @@
 // Needs to be changed depending on what microservice is being called/where it is being called
 
-//const baseUrl = "http://127.0.0.1:5011/" //Local Dev
-const baseUrl = "https://80exsb2z98.execute-api.us-east-1.amazonaws.com/dev/"  //Dev API gateway
+const baseUrl = "http://127.0.0.1:5011/" //Local Dev
+//const baseUrl = "https://80exsb2z98.execute-api.us-east-1.amazonaws.com/dev/"  //Dev API gateway
 
 export default class API {
     static getPlaylists() {
         return fetch(`${baseUrl}api/playlists`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': "DELETE, POST, GET, OPTIONS",
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With'
             }
         })
         .then( resp => resp.json())
@@ -56,6 +59,7 @@ export default class API {
     }
 
     static addPlaylist(body) {
+        console.log(body)
         return fetch(`${baseUrl}api/playlists`, {
             method: 'POST',
             headers: {

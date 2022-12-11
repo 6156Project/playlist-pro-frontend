@@ -22,7 +22,11 @@ function PlaylistForm(props) {
     const createClicked = () => {
         console.log("Create pressed")
         console.log(name)
-        API.addPlaylist({name})
+        console.log(props.playlists.length)
+        API.addPlaylist({
+            id: props.playlists.length + 1,
+            name: name
+        })
          .then( resp => props.playlistCreated(resp))
          .catch( error => console.log(error))
     }
