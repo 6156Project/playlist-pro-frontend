@@ -1,20 +1,20 @@
 // Needs to be changed depending on what microservice is being called/where it is being called
 
 //const baseUrl = "http://127.0.0.1:5011/" //Local Dev
-const baseUrl = "https://80exsb2z98.execute-api.us-east-1.amazonaws.com/dev/"  //Dev API gateway
+const baseUrl = "https://52.90.71.19.nip.io:5011/"  //Dev API gateway
 
 export default class API {
     // HELPER FUNCTIONS
     // Show the spinner before API call
     // then, hide the spinner after the API call is completed
     static showSpinner() {
-        let spinner = document.getElementById("spinnerContainer");
-        spinner.style.display = "flex";
+        // let spinner = document.getElementById("spinnerContainer");
+        // spinner.style.display = "flex";
     }
 
     static hideSpinner() {
-        let spinner = document.getElementById("spinnerContainer");
-        spinner.style.display = "none";
+        // let spinner = document.getElementById("spinnerContainer");
+        // spinner.style.display = "none";
     }
 
     static async getPlaylists() {
