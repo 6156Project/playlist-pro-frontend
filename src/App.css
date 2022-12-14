@@ -95,6 +95,20 @@
   justify-content: center;
 }
 
+#spinnerContainer {
+  display: none;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#mainContainer {
+  display: block;
+}
+
 /* source for side bar animations: https://www.gradient-animator.com/ */
 .App-background {
   background: linear-gradient(237deg, #14a42a, #1faed4);

@@ -4,93 +4,139 @@
 const baseUrl = "https://80exsb2z98.execute-api.us-east-1.amazonaws.com/dev/"  //Dev API gateway
 
 export default class API {
-    static getPlaylists() {
-        return fetch(`${baseUrl}api/playlists`, {
+    // HELPER FUNCTIONS
+    // Show the spinner before API call
+    // then, hide the spinner after the API call is completed
+    static showSpinner() {
+        let spinner = document.getElementById("spinnerContainer");
+        spinner.style.display = "flex";
+    }
+
+    static hideSpinner() {
+        let spinner = document.getElementById("spinnerContainer");
+        spinner.style.display = "none";
+    }
+
+    static async getPlaylists() {
+        API.showSpinner();
+        const response = await fetch(`${baseUrl}api/playlists`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
-        })
-        .then( resp => resp.json())
+        });
+        const json = await response.json();
+        API.hideSpinner();
+        return json;
     }
 
-    static getPlaylistsWithPagination(page) {
-        return fetch(`${baseUrl}api/playlists?page=${page}`, {
+
+    static async getPlaylistsWithPagination(page) {
+        API.showSpinner();
+        const response = await fetch(`${baseUrl}api/playlists?page=${page}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
-        })
-            .then( resp => resp.json())
+        });
+        const json = await response.json();
+        API.hideSpinner();
+        return json;
     }
 
-    static getSongs(selectedPlaylistId) {
-        return fetch(`${baseUrl}api/playlists/${selectedPlaylistId}`, {
+    static async getSongs(selectedPlaylistId) {
+        API.showSpinner();
+        const response = await fetch(`${baseUrl}api/playlists/${selectedPlaylistId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
-        })
-        .then( resp => resp.json())
+        });
+        const json = await response.json();
+        API.hideSpinner();
+        return json;
     }
 
-    static getSongsWithPagination(selectedPlaylistId, page) {
-        return fetch(`${baseUrl}api/playlistsongs/${selectedPlaylistId}?page=${page}`, {
+    static async getSongsWithPagination(selectedPlaylistId, page) {
+        API.showSpinner();
+        const response = await fetch(`${baseUrl}api/playlistsongs/${selectedPlaylistId}?page=${page}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
-        })
-        .then( resp => resp.json())
+        });
+        const json = await response.json();
+        API.hideSpinner();
+        return json;
     }
 
-    static updatePlaylist(selectedPlaylistId, body) {
-        return fetch(`${baseUrl}api/playlists/${selectedPlaylistId}`, {
+    static async updatePlaylist(selectedPlaylistId, body) {
+        API.showSpinner();
+        const response = await fetch(`${baseUrl}api/playlists/${selectedPlaylistId}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify( body )
-          })
-          .then( resp => resp.json())
+        });
+        const json = await response.json();
+        API.hideSpinner();
+        return json;
     }
 
-    static addPlaylist(body) {
+    static async addPlaylist(body) {
         console.log(body)
-        return fetch(`${baseUrl}api/playlists`, {
+        API.showSpinner();
+        const response = await fetch(`${baseUrl}api/playlists`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify( body )
-          })
-          .then( resp => resp.json())
+        });
+        const json = await response.json();
+        API.hideSpinner();
+        return json;
     }
 
-    static deletePlaylist(playlistId) {
-        return fetch(`${baseUrl}api/playlists/${playlistId}`, {
+    static async deletePlaylist(playlistId) {
+        API.showSpinner();
+        const response = await fetch(`${baseUrl}api/playlists/${playlistId}`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json'
             },
-          })
+        });
+        const json = await response.json();
+        API.hideSpinner();
+        return json;
     }
 
-    static login() {
-        return fetch(`${baseUrl}login`, {
+    static async login() {
+        API.showSpinner();
+        const response = await fetch(`${baseUrl}login`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             },
-        })
+        });
+        const json = await response.json();
+        API.hideSpinner();
+        return json;
     }
 
-    static logout() {
-        return fetch(`${baseUrl}logout`, {
+    static async logout() {
+        API.showSpinner();
+        const response = await fetch(`${baseUrl}logout`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             },
-        })
+        });
+        const json = await response.json();
+        API.hideSpinner();
+        return json;
     }
+
+
 }
