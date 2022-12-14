@@ -15,7 +15,7 @@ export default class API {
     }
 
     static getPlaylistsWithPagination(page) {
-        return fetch(`${baseUrl}api/playlists&page=${page}`, {
+        return fetch(`${baseUrl}api/playlists?page=${page}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -35,7 +35,7 @@ export default class API {
     }
 
     static getSongsWithPagination(selectedPlaylistId, page) {
-        return fetch(`${baseUrl}api/playlists/${selectedPlaylistId}&page=${page}`, {
+        return fetch(`${baseUrl}api/playlistsongs/${selectedPlaylistId}?page=${page}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

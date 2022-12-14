@@ -10,8 +10,8 @@ import API from '../api-service';
 
 function Home() {
     // Can use these variables for testing purposes locally
-    const [playlists, setPlaylists] = useState([{"id":123, "name":"Jesse's Playlist"},{"id":123, "name":"Jesse's Playlist"},{"id":123, "name":"Jesse's Playlist"}]);
-    const [selectedPlaylistSongs, setSelectedPlaylistSongs] = useState([{"songId":1},{"songId":2},{"songId":3}]);
+    const [playlists, setPlaylists] = useState(null) //useState([{"id":123, "name":"Jesse's Playlist"},{"id":123, "name":"Jesse's Playlist"},{"id":123, "name":"Jesse's Playlist"}]);
+    const [selectedPlaylistSongs, setSelectedPlaylistSongs] = useState([])//useState([{"song_id": "75697225","song_name": "Hello","artist_id": "313922","artist_name": "harumi","album_id": "19882314","album_name": "Harumi - Remastered"}])//useState([])//useState([{"songId":1},{"songId":2},{"songId":3}]);
 
     // const [playlists, setPlaylists] = useState([]);
     const [selectedPlaylist, setSelectedPlaylist] = useState(null);
@@ -25,8 +25,8 @@ function Home() {
     useEffect(()=> {
         // get up-to-date playlists from microservice
         API.getPlaylists()
-            .then( resp => setPlaylists(resp))
-            .catch( error => console.log(error))
+        .then( resp => setPlaylists(resp))
+        .catch( error => console.log(error))
 
         // TODO: delete me if we end up using L41 pagination pattern
         // WITHOUT using pagination, get songs from the selected playlist
@@ -35,16 +35,20 @@ function Home() {
         // .catch( error => console.log(error))
     }, [selectedPlaylistId])
 
-    const playlistClicked = playlist => {
+    const playlistClicked = async playlist => {
+        console.log(playlist)
         setSelectedPlaylist(playlist);
         setSelectedPlaylistId(playlist.id);
         setEditedPlaylist(null);
+        console.log(selectedPlaylistId)
 
         // using pagination, get songs from the selected playlist
+        if (selectedPlaylistId !== null) {
         setSongPageNumber(1) // reset page num to 1
-        API.getSongsWithPagination(selectedPlaylistId, songPageNumber)
-            .then( resp => addMoreSongs(resp))
-            .catch( error => console.log(error))
+            API.getSongsWithPagination(selectedPlaylistId, songPageNumber)
+                .then( resp => addMoreSongs(resp.body))
+                .catch( error => console.log(error))
+        }
     }
 
     const editClicked = playlist => {
@@ -75,8 +79,11 @@ function Home() {
     }
 
     const addMoreSongs = song => {
-        const newSongs = [...selectedPlaylistSongs, song];
+        console.log(song)
+        console.log(song.songs)
+        const newSongs = song.songs;
         setSelectedPlaylistSongs(newSongs)
+        console.log(newSongs)
     }
 
     const removeClicked = playlist => {

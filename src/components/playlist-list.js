@@ -24,7 +24,7 @@ function PlaylistList(props) {
     return (
           <div>
             <h1>Playlists</h1>
-            { props.playlists && props.playlists.map( playlist => { 
+            { props.playlists && props.playlists.body.map( playlist => { 
               return (
                 <div key={playlist.id} className="playlist-item">
                     <h2 onClick={playlistClicked(playlist)}>{playlist.name}</h2>

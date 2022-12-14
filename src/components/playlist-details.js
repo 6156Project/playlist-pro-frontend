@@ -21,8 +21,8 @@ function PlaylistDetails(props) {
                 <h1>Selected Playlist:<br/>{props.playlist.name}</h1>
                     { props.playlistSongs && props.playlistSongs.map( song => {
                       return (
-                        <div key={song.songId}>
-                            <h2>{song.songId}</h2>
+                        <div key={song.song_id}>
+                            <h2>{song.song_id}</h2>
                         </div>
                       )
                     })}
