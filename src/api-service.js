@@ -44,9 +44,9 @@ export default class API {
         return json;
     }
 
-    static async getSongs(selectedPlaylistId) {
+    static async getSongs(songName) {
         API.showSpinner();
-        const response = await fetch(`${baseUrl}api/playlists/${selectedPlaylistId}`, {
+        const response = await fetch(`${baseUrl}api/songs/search?song_name=${songName}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -88,6 +88,21 @@ export default class API {
         console.log(body)
         API.showSpinner();
         const response = await fetch(`${baseUrl}api/playlists`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify( body )
+        });
+        const json = await response.json();
+        API.hideSpinner();
+        return json;
+    }
+
+    static async addSongtoPlaylist(playlistId, body) {
+        console.log(body)
+        API.showSpinner();
+        const response = await fetch(`${baseUrl}api/playlistsongs/${playlistId}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

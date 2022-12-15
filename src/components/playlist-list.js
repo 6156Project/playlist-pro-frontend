@@ -1,5 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import API  from '../api-service';
@@ -28,6 +29,7 @@ function PlaylistList(props) {
               return (
                 <div key={playlist.id} className="playlist-item">
                     <h2 onClick={playlistClicked(playlist)}>{playlist.name}</h2>
+                    <FontAwesomeIcon icon={faUser} onClick={() => editClicked(playlist)}/>
                     <FontAwesomeIcon icon={faEdit} onClick={() => editClicked(playlist)}/>
                     <FontAwesomeIcon icon={faTrash} onClick={() => removeClicked(playlist)}/>
                 </div>
