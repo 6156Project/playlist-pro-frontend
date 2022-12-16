@@ -33,8 +33,8 @@ function PlaylistUserForm(props) {
     <React.Fragment>
         { props.playlist ? (
             <div className="form-div">
-                <label htmlFor="name"><h1>Enter user to Add to Playlist {props.playlist.name}</h1></label><br/>
-                <input id="name" type="text" placeholder="name" value={name}
+                <label htmlFor="name"><h1>Enter User to Add to Playlist {props.playlist.name}</h1></label><br/>
+                <input id="name" type="text" placeholder="Username" value={name}
                     onChange={ event => setName(event.target.value) }
                 />
                 <br/>
