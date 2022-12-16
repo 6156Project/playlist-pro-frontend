@@ -8,6 +8,11 @@ import API  from '../api-service';
 
 function PlaylistList(props) {
 
+    const addUser = playlist => {
+      console.log("Hi")
+      props.addUser(playlist)
+    }
+
     const playlistClicked = playlist => event => {
         props.playlistClicked(playlist)
     }
@@ -29,7 +34,7 @@ function PlaylistList(props) {
               return (
                 <div key={playlist.id} className="playlist-item">
                     <h2 onClick={playlistClicked(playlist)}>{playlist.name}</h2>
-                    <FontAwesomeIcon icon={faUser} onClick={() => editClicked(playlist)}/>
+                    <FontAwesomeIcon icon={faUser} onClick={() => addUser(playlist)}/>
                     <FontAwesomeIcon icon={faEdit} onClick={() => editClicked(playlist)}/>
                     <FontAwesomeIcon icon={faTrash} onClick={() => removeClicked(playlist)}/>
                 </div>

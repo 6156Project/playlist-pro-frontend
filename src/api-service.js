@@ -114,6 +114,19 @@ export default class API {
         return json;
     }
 
+    static async addUsertoPlaylist(playlistId, user) {
+        API.showSpinner();
+        const response = await fetch(`${baseUrl}api/playlistaccess/${playlistId}/add/${user}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+        });
+        const json = await response.json();
+        API.hideSpinner();
+        return json;
+    }
+
     static async deletePlaylist(playlistId) {
         API.showSpinner();
         const response = await fetch(`${baseUrl}api/playlists/${playlistId}`, {

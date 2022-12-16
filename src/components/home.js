@@ -3,6 +3,7 @@ import '../App.css';
 import PlaylistList from './playlist-list';
 import PlaylistDetails from './playlist-details';
 import PlaylistForm from './playlist-form';
+import PlaylistUserForm from './playlist-user-form';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faArrowRight, faMusic, faPlus} from '@fortawesome/free-solid-svg-icons';
 import API from '../api-service';
@@ -16,6 +17,9 @@ function Home() {
     // const [playlists, setPlaylists] = useState([]);
     const [selectedPlaylist, setSelectedPlaylist] = useState(null);
     const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
+
+    const [addUserVar, setAddUserVar] = useState(null);
+    const [addUserPlaylist, setAddUserPlaylist] = useState(null);
 
     // const [selectedPlaylistSongs, setSelectedPlaylistSongs] = useState([]);
     const [editedPlaylist, setEditedPlaylist] = useState(null);
@@ -35,11 +39,21 @@ function Home() {
         // .catch( error => console.log(error))
     }, [selectedPlaylistId])
 
+    const addUser = playlist => {
+        console.log(playlist)
+        console.log("Add User Clicked")
+        setSelectedPlaylist(null);
+        setEditedPlaylist(null);
+        setAddUserVar("Yes");
+        setAddUserPlaylist(playlist);
+    }
+
     const playlistClicked = async playlist => {
         console.log(playlist)
         setSelectedPlaylist(playlist);
         setSelectedPlaylistId(playlist.id);
         setEditedPlaylist(null);
+        setAddUserVar(null);
         console.log(selectedPlaylistId)
 
         // using pagination, get songs from the selected playlist
@@ -56,6 +70,7 @@ function Home() {
         console.log("Edit Clicked")
         setSelectedPlaylist(null);
         setEditedPlaylist(playlist);
+        setAddUserVar(null);
     }
 
     const updatedPlaylist = playlist => {
@@ -70,6 +85,7 @@ function Home() {
 
     const newPlaylist = () => {
         setSelectedPlaylist(null);
+        setAddUserVar(null);
         setEditedPlaylist({name: ''});
     }
 
@@ -120,12 +136,15 @@ function Home() {
                 <div className="layout">
                     <div className="layout-left">
                         <div className="App-button" onClick={ newPlaylist }><FontAwesomeIcon icon={faPlus}/> New Playlist</div>
-                        <PlaylistList playlists={playlists} playlistClicked={playlistClicked} editClicked={editClicked} removeClicked={removeClicked}/>
+                        <PlaylistList playlists={playlists} addUser={addUser} playlistClicked={playlistClicked} editClicked={editClicked} removeClicked={removeClicked}/>
                     </div>
                     <div className="layout-right">
                         <PlaylistDetails playlist={selectedPlaylist} playlistSongs={selectedPlaylistSongs} songPageNumber={songPageNumber} setSongPageNumber={setSongPageNumber} />
                         { editedPlaylist ?
                             <PlaylistForm playlist={editedPlaylist} playlists={playlists} updatedPlaylist={updatedPlaylist} playlistCreated={playlistCreated}/>
+                            : null }
+                        { addUserVar ?
+                            <PlaylistUserForm playlist={addUserPlaylist} playlists={playlists}/>
                             : null }
                     </div>
                 </div>
