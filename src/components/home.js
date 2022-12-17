@@ -90,8 +90,12 @@ function Home() {
     }
 
     const playlistCreated = playlist => {
-        const newPlaylists = [...playlists, playlist];
-        setPlaylists(newPlaylists);
+        // Since playlist is added in DB, we can just
+        // re-get all the playlists from DB again to get
+        // updated list. This refreshes entire page for us
+        API.getPlaylists()
+            .then( resp => setPlaylists(resp))
+            .catch( error => console.log(error))
     }
 
     const addMoreSongs = song => {
@@ -103,13 +107,12 @@ function Home() {
     }
 
     const removeClicked = playlist => {
-        const newPlaylists = playlists.filter( play => {
-            if (play.id === playlist.id) {
-                return false;
-            }
-            return true;
-        })
-        setPlaylists(newPlaylists);
+        // Since playlist is removed in DB, we can just
+        // re-get all the playlists from DB again to get
+        // updated list. This refreshes entire page for us
+        API.getPlaylists()
+            .then( resp => setPlaylists(resp))
+            .catch( error => console.log(error))
     }
 
     const logoutClicked = () => {

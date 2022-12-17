@@ -10,11 +10,15 @@ export default class API {
     static showSpinner() {
         let spinner = document.getElementById("spinnerContainer");
         spinner.style.display = "flex";
+        let main = document.getElementById("mainContainer");
+        main.style.display = "none";
     }
 
     static hideSpinner() {
         let spinner = document.getElementById("spinnerContainer");
         spinner.style.display = "none";
+        let main = document.getElementById("mainContainer");
+        main.style.display = "block";
     }
 
     static async getPlaylists() {
