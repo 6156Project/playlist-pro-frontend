@@ -102,7 +102,13 @@
   justify-content: center;
   height: 100vh;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  /*Cool spinner background*/
+  background: linear-gradient(237deg, #14a42a, #1faed4);
+  background-size: 400% 400%;
+  -webkit-animation: AnimationName 7s ease infinite;
+  -moz-animation: AnimationName 7s ease infinite;
+  -o-animation: AnimationName 7s ease infinite;
+  animation: AnimationName 7s ease infinite;
 }
 
 #mainContainer {
