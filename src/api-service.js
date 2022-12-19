@@ -35,9 +35,9 @@ export default class API {
     }
 
 
-    static async getPlaylistsWithPagination(page) {
+    static async getPlaylistsWithPagination(limit, offset) {
         API.showSpinner();
-        const response = await fetch(`${baseUrl}api/playlists?page=${page}`, {
+        const response = await fetch(`${baseUrl}api/playlists?limit=${limit}&offset=${offset}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

@@ -5,7 +5,7 @@ import PlaylistDetails from './playlist-details';
 import PlaylistForm from './playlist-form';
 import PlaylistUserForm from './playlist-user-form';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faArrowRight, faMusic, faPlus} from '@fortawesome/free-solid-svg-icons';
+import {faArrowLeft, faArrowRight, faMusic, faPlus} from '@fortawesome/free-solid-svg-icons';
 import API from '../api-service';
 //import Login from "./login";
 
@@ -21,6 +21,10 @@ function Home() {
     const [addUserVar, setAddUserVar] = useState(null);
     const [addUserPlaylist, setAddUserPlaylist] = useState(null);
 
+    const limit = 5;
+    const [offset, setOffset] = useState(0);
+    const [page, setPage] = useState(0);
+
     // const [selectedPlaylistSongs, setSelectedPlaylistSongs] = useState([]);
     const [editedPlaylist, setEditedPlaylist] = useState(null);
     const [songPageNumber, setSongPageNumber] = useState(1);
@@ -28,7 +32,7 @@ function Home() {
 
     useEffect(()=> {
         // get up-to-date playlists from microservice
-        API.getPlaylists()
+        API.getPlaylistsWithPagination(limit, offset)
         .then( resp => setPlaylists(resp))
         .catch( error => console.log(error))
 
@@ -37,7 +41,7 @@ function Home() {
         // API.getSongs(selectedPlaylistId)
         // .then( resp => setSelectedPlaylistSongs(resp))
         // .catch( error => console.log(error))
-    }, [selectedPlaylistId])
+    }, [selectedPlaylistId, offset])
 
     const addUser = playlist => {
         console.log(playlist)
@@ -46,6 +50,18 @@ function Home() {
         setEditedPlaylist(null);
         setAddUserVar("Yes");
         setAddUserPlaylist(playlist);
+    }
+
+    const addPage = () => {
+        setPage(page + 1)
+        setOffset(page * limit)
+    }
+
+    const subtractPage = () => {
+        if (offset > 0) {
+            setPage(page - 1)
+            setOffset(page * limit)
+        }
     }
 
     const playlistClicked = async playlist => {
@@ -77,7 +93,7 @@ function Home() {
         // Since playlist is updated in DB, we can just
         // re-get all the playlists from DB again to get
         // updated list. This refreshes entire page for us
-        API.getPlaylists()
+        API.getPlaylistsWithPagination(limit, offset)
             .then( resp => setPlaylists(resp))
             .catch( error => console.log(error))
     }
@@ -92,7 +108,7 @@ function Home() {
         // Since playlist is added in DB, we can just
         // re-get all the playlists from DB again to get
         // updated list. This refreshes entire page for us
-        API.getPlaylists()
+        API.getPlaylistsWithPagination(limit, offset)
             .then( resp => setPlaylists(resp))
             .catch( error => console.log(error))
     }
@@ -109,7 +125,7 @@ function Home() {
         // Since playlist is removed in DB, we can just
         // re-get all the playlists from DB again to get
         // updated list. This refreshes entire page for us
-        API.getPlaylists()
+        API.getPlaylistsWithPagination(limit, offset)
             .then( resp => setPlaylists(resp))
             .catch( error => console.log(error))
     }
@@ -139,6 +155,8 @@ function Home() {
                     <div className="layout-left">
                         <div className="App-button" onClick={ newPlaylist }><FontAwesomeIcon icon={faPlus}/> New Playlist</div>
                         <PlaylistList playlists={playlists} addUser={addUser} playlistClicked={playlistClicked} editClicked={editClicked} removeClicked={removeClicked}/>
+                        <div className="App-button" onClick={ subtractPage }><FontAwesomeIcon icon={faArrowLeft}/> Page Left</div>
+                        <div className="App-button" onClick={ addPage }><FontAwesomeIcon icon={faArrowRight}/> Page Right</div>
                     </div>
                     <div className="layout-right">
                         <PlaylistDetails playlist={selectedPlaylist} playlistSongs={selectedPlaylistSongs} songPageNumber={songPageNumber} setSongPageNumber={setSongPageNumber} />
