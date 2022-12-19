@@ -74,13 +74,12 @@ function Home() {
     }
 
     const updatedPlaylist = playlist => {
-        const newPlaylists = playlists.map( play => {
-            if (play.id === playlist.id) {
-                return playlist;
-            }
-            return play
-        })
-        setPlaylists(newPlaylists)
+        // Since playlist is updated in DB, we can just
+        // re-get all the playlists from DB again to get
+        // updated list. This refreshes entire page for us
+        API.getPlaylists()
+            .then( resp => setPlaylists(resp))
+            .catch( error => console.log(error))
     }
 
     const newPlaylist = () => {
