@@ -5,8 +5,26 @@ import API from "../api-service";
 
 function PlaylistDetails(props) {
 
-    const [songName, setsongName] = useState('');
+    const [songName, setSongName] = useState('');
 
+    const addingSongsLogic = (event) => {
+        let songName = event.target.value
+        let addSongButton = document.getElementById("getMoreSongsButton")
+        setSongName(songName)
+
+        if (songName.length <= 0) {
+            console.log("Song name not long enough");
+            addSongButton.style.pointerEvents = "none";
+            addSongButton.style.backgroundColor = "gray";
+            addSongButton.style.textDecoration = "line-through";
+        } else {
+            console.log("Song name valid.");
+            addSongButton.style.pointerEvents = "auto";
+            addSongButton.style.backgroundColor = "green";
+            addSongButton.style.textDecoration = "none";
+        }
+        console.log("Done.");
+    }
 
     const getMoreSongs = () => {
         //let newPageNumber = props.songPageNumber + 1
@@ -46,9 +64,9 @@ function PlaylistDetails(props) {
                     })}
                     <br/><br/>
                 <input id="songName" type="text" placeholder="Song Name to Fetch" value={songName}
-                    onChange={ event => setsongName(event.target.value) }
+                    onChange={ event => addingSongsLogic(event) }
                 />
-                <div className="App-button" onClick={getMoreSongs}><FontAwesomeIcon icon={faPlus}/> Fetch more songs</div>
+                <div id="getMoreSongsButton" className="App-button" onClick={getMoreSongs}><FontAwesomeIcon icon={faPlus}/> Fetch more songs</div>
             </div>
             ): null}
         </React.Fragment >
