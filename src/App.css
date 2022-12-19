@@ -115,6 +115,22 @@
   display: block;
 }
 
+#songName {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20rem;
+}
+
+#getMoreSongsButton {
+  /*Defaults to none but*/
+  /*when a valid song is inputted*/
+  /*it becomes set to auto via JS*/
+  pointer-events: none;
+  background-color: gray;
+  text-decoration: line-through;
+}
+
 /* source for side bar animations: https://www.gradient-animator.com/ */
 .App-background {
   background: linear-gradient(237deg, #14a42a, #1faed4);
