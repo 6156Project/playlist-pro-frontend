@@ -6,11 +6,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 
-function Login({ setToken }) {
+function Login() {
     const loginClicked = () => {
         API.login()
-            .then(() => setToken(true))
-            .catch(() => console.log())
+            .then(function(json) {
+                // This function takes the redirect URL from the given callback
+                // and replaces it with the frontend URL so that it redirects correctly
+                // after login...
+                console.log(json)
+                console.log("Login clicked...")
+                window.location.replace(json.request_uri)
+                var host = window.location.host
+                console.log(host)
+            })
+            .catch(error => console.log(error))
     }
 
     return (
