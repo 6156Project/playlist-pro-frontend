@@ -24,6 +24,7 @@ function Home() {
     const limit = 5;
     const [offset, setOffset] = useState(0);
     const [page, setPage] = useState(0);
+    const [maxPlaylistLength, setMaxPlaylistLength] = useState(0);
 
     // const [selectedPlaylistSongs, setSelectedPlaylistSongs] = useState([]);
     const [editedPlaylist, setEditedPlaylist] = useState(null);
@@ -35,6 +36,9 @@ function Home() {
         API.getPlaylistsWithPagination(limit, offset)
         .then( resp => setPlaylists(resp))
         .catch( error => console.log(error))
+
+        API.getPlaylists()
+        .then( resp => setMaxPlaylistLength(resp.body.length))
 
         // TODO: delete me if we end up using L41 pagination pattern
         // WITHOUT using pagination, get songs from the selected playlist
@@ -53,6 +57,7 @@ function Home() {
     }
 
     const addPage = () => {
+        if (offset < (maxPlaylistLength - limit))
         setPage(page + 1)
         setOffset(page * limit)
     }
