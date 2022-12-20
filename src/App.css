@@ -131,6 +131,32 @@
   text-decoration: line-through;
 }
 
+#pageButtonHolder {
+  display: block;
+}
+
+#pageLeftButton {
+  width: 35%;
+  margin-right: auto;
+}
+
+#pageRightButton {
+  width: 35%;
+  margin-left: auto;
+}
+
+#numberOfPlaylists {
+  font-size: 30px;
+  text-align: center;
+  font-style: italic;
+}
+
+#pageNumber {
+  font-size: 30px;
+  text-align: center;
+  font-style: italic;
+}
+
 /* source for side bar animations: https://www.gradient-animator.com/ */
 .App-background {
   background: linear-gradient(237deg, #14a42a, #1faed4);

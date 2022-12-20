@@ -32,6 +32,34 @@ function Home() {
     //const [token, setToken] = useState(false);
 
     useEffect(()=> {
+        console.log(page)
+        console.log(offset)
+        console.log(maxPlaylistLength)
+
+        // Logic so that buttons are greyed out if not clickable.
+        let pageLeftButton = document.getElementById("pageLeftButton")
+        if (offset > 0) {
+            pageLeftButton.style.pointerEvents = "auto";
+            pageLeftButton.style.backgroundColor = "green";
+            pageLeftButton.style.textDecoration = "none";
+        } else {
+            pageLeftButton.style.pointerEvents = "none";
+            pageLeftButton.style.backgroundColor = "gray";
+            pageLeftButton.style.textDecoration = "line-through";
+        }
+        let pageRightButton = document.getElementById("pageRightButton")
+        // This first part of the if statement is needed for when DOM is just initialized
+        // Otherwise button will be greyed out at first render
+        if ((page == 0 && offset == 0 && maxPlaylistLength == 0) || (offset < (maxPlaylistLength - limit))) {
+            pageRightButton.style.pointerEvents = "auto";
+            pageRightButton.style.backgroundColor = "green";
+            pageRightButton.style.textDecoration = "none";
+        } else {
+            pageRightButton.style.pointerEvents = "none";
+            pageRightButton.style.backgroundColor = "gray";
+            pageRightButton.style.textDecoration = "line-through";
+        }
+
         // get up-to-date playlists from microservice
         API.getPlaylistsWithPagination(limit, offset)
         .then( resp => setPlaylists(resp))
@@ -45,7 +73,7 @@ function Home() {
         // API.getSongs(selectedPlaylistId)
         // .then( resp => setSelectedPlaylistSongs(resp))
         // .catch( error => console.log(error))
-    }, [selectedPlaylistId, offset])
+    }, [selectedPlaylistId, offset, page])
 
     const addUser = playlist => {
         console.log(playlist)
@@ -57,16 +85,21 @@ function Home() {
     }
 
     const addPage = () => {
-        if (offset < (maxPlaylistLength - limit))
-        setPage(page + 1)
-        setOffset(page * limit)
+        console.log("addPage")
+        if (offset < (maxPlaylistLength - limit)) {
+            setPage(page + 1)
+            setOffset((page + 1) * limit)
+        }
+        console.log("addPage done")
     }
 
     const subtractPage = () => {
+        console.log("Subtract page")
         if (offset > 0) {
-            setPage(page - 1)
-            setOffset(page * limit)
+            setPage( page - 1)
+            setOffset((page - 1) * limit)
         }
+        console.log("Subtract page done")
     }
 
     const playlistClicked = async playlist => {
@@ -158,10 +191,15 @@ function Home() {
                 <div className="horizontal-rule"></div>
                 <div className="layout">
                     <div className="layout-left">
+                        <div id="numberOfPlaylists"><h2>Number of playlists: {maxPlaylistLength}</h2></div>
                         <div className="App-button" onClick={ newPlaylist }><FontAwesomeIcon icon={faPlus}/> New Playlist</div>
                         <PlaylistList playlists={playlists} addUser={addUser} playlistClicked={playlistClicked} editClicked={editClicked} removeClicked={removeClicked}/>
-                        <div className="App-button" onClick={ subtractPage }><FontAwesomeIcon icon={faArrowLeft}/> Page Left</div>
-                        <div className="App-button" onClick={ addPage }><FontAwesomeIcon icon={faArrowRight}/> Page Right</div>
+                        <div className="horizontal-rule"></div>
+                        <div className="pageButtonHolder">
+                            <div id="pageLeftButton" className="App-button" onClick={ () => subtractPage() }><FontAwesomeIcon icon={faArrowLeft}/> Page Left</div>
+                            <div id="pageRightButton" className="App-button" onClick={ () => addPage() }><FontAwesomeIcon icon={faArrowRight}/> Page Right</div>
+                            <div id="pageNumber"><h3>Page {page+1}</h3></div>
+                        </div>
                     </div>
                     <div className="layout-right">
                         <PlaylistDetails playlist={selectedPlaylist} playlistSongs={selectedPlaylistSongs} songPageNumber={songPageNumber} setSongPageNumber={setSongPageNumber} />
