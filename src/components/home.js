@@ -55,7 +55,7 @@ function Home() {
         let pageRightButton = document.getElementById("pageRightButton")
         // This first part of the if statement is needed for when DOM is just initialized
         // Otherwise button will be greyed out at first render
-        if ((page == 0 && offset == 0 && maxPlaylistLength == 0) || (offset < (maxPlaylistLength - limit))) {
+        if ((page === 0 && offset === 0 && maxPlaylistLength === 0) || (offset < (maxPlaylistLength - limit))) {
             pageRightButton.style.pointerEvents = "auto";
             pageRightButton.style.backgroundColor = "green";
             pageRightButton.style.textDecoration = "none";
