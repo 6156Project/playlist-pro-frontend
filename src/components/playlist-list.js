@@ -22,7 +22,7 @@ function PlaylistList(props) {
     }
 
     const removeClicked = playlist => {
-        API.deletePlaylist(playlist.id)
+        API.deletePlaylist(playlist.id, props.deletePlaylistLink)
         .then( () => props.removeClicked(playlist))
         .catch(error => console.log(error))
     }

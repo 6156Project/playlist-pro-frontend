@@ -31,6 +31,16 @@ function Home() {
     const [songPageNumber, setSongPageNumber] = useState(1);
     //const [token, setToken] = useState(false);
 
+    //Links for HATEOAS
+    const [getPlaylistsLink, setGetPlaylistsLink] = useState(null)
+    const [postPlaylistLink, setPostPlaylistLink] = useState(null)
+    const [putPlaylistLink, setPutPlaylistLink] = useState(null)
+    const [deletePlaylistLink, setDeletePlaylistLink] = useState(null)
+    const [getSongsLink, setGetSongsLink] = useState(null)
+    const [getPlaylistSongsLink, setGetPlaylistSongsLink] = useState(null)
+    const [postPlaylistSongsLink, setPostPlaylistSongsLink] = useState(null)
+    const [postPlaylistAccessLink, setPostPlaylistAccessLink] = useState(null)
+
     // Set this to true whenever useEffect needs to be called so page gets refreshed
     const [useEffectFlag, setUseEffectFlag] = useState(false);
 
@@ -65,20 +75,31 @@ function Home() {
             pageRightButton.style.textDecoration = "line-through";
         }
 
+        API.getPlaylists()
+        .then(  
+            resp => {
+            setMaxPlaylistLength(resp.body.length)
+            setGetPlaylistsLink(resp.links[0].href)
+            setPostPlaylistLink(resp.links[1].href)
+            setPutPlaylistLink(resp.links[2].href)
+            setDeletePlaylistLink(resp.links[3].href)
+            setGetSongsLink(resp.links[4].href)
+            setGetPlaylistSongsLink(resp.links[5].href)
+            setPostPlaylistSongsLink(resp.links[6].href)
+            setPostPlaylistAccessLink(resp.links[7].href)
+            })
+
         // get up-to-date playlists from microservice
-        API.getPlaylistsWithPagination(limit, offset)
+        API.getPlaylistsWithPagination(limit, offset, getPlaylistsLink)
         .then( resp => setPlaylists(resp))
         .catch( error => console.log(error))
-
-        API.getPlaylists()
-        .then( resp => setMaxPlaylistLength(resp.body.length))
 
         // TODO: delete me if we end up using L41 pagination pattern
         // WITHOUT using pagination, get songs from the selected playlist
         // API.getSongs(selectedPlaylistId)
         // .then( resp => setSelectedPlaylistSongs(resp))
         // .catch( error => console.log(error))
-    }, [selectedPlaylistId, offset, page, maxPlaylistLength, useEffectFlag, selectedPlaylist])
+    }, [selectedPlaylistId, offset, page, maxPlaylistLength, useEffectFlag, selectedPlaylist, getPlaylistsLink])
 
     const addUser = playlist => {
         console.log(playlist)
@@ -118,7 +139,7 @@ function Home() {
         // using pagination, get songs from the selected playlist
         if (playlist.id !== null) {
         setSongPageNumber(1) // reset page num to 1
-            API.getSongsWithPagination(playlist.id, songPageNumber)
+            API.getSongsWithPagination(playlist.id, songPageNumber, getPlaylistSongsLink)
                 .then( resp => addMoreSongs(resp.body))
                 .catch( error => console.log(error))
         }
@@ -189,7 +210,8 @@ function Home() {
                     <div className="layout-left">
                         <div id="numberOfPlaylists"><h2>Number of playlists: {maxPlaylistLength}</h2></div>
                         <div className="App-button" onClick={ newPlaylist }><FontAwesomeIcon icon={faPlus}/> New Playlist</div>
-                        <PlaylistList playlists={playlists} addUser={addUser} playlistClicked={playlistClicked} editClicked={editClicked} removeClicked={removeClicked}/>
+                        <PlaylistList playlists={playlists} addUser={addUser} playlistClicked={playlistClicked} editClicked={editClicked} removeClicked={removeClicked} 
+                            deletePlaylistLink={deletePlaylistLink}/>
                         <div className="horizontal-rule"></div>
                         <div className="pageButtonHolder">
                             <div id="pageLeftButton" className="App-button" onClick={ () => subtractPage() }><FontAwesomeIcon icon={faArrowLeft}/> Page Left</div>
@@ -200,12 +222,14 @@ function Home() {
                     <div className="layout-right">
                         <PlaylistDetails playlist={selectedPlaylist} playlistSongs={selectedPlaylistSongs}
                                          songPageNumber={songPageNumber} setSongPageNumber={setSongPageNumber}
-                                         setUseEffectFlag={setUseEffectFlag} playlistClicked={playlistClicked}/>
+                                         setUseEffectFlag={setUseEffectFlag} playlistClicked={playlistClicked}
+                                         getSongsLink={getSongsLink} postPlaylistSongsLink={postPlaylistSongsLink}/>
                         { editedPlaylist ?
-                            <PlaylistForm playlist={editedPlaylist} playlists={playlists} updatedPlaylist={updatedPlaylist} playlistCreated={playlistCreated}/>
+                            <PlaylistForm playlist={editedPlaylist} playlists={playlists} updatedPlaylist={updatedPlaylist} playlistCreated={playlistCreated}
+                                postPlaylistLink={postPlaylistLink} putPlaylistLink={putPlaylistLink}/>
                             : null }
                         { addUserVar ?
-                            <PlaylistUserForm playlist={addUserPlaylist} playlists={playlists}/>
+                            <PlaylistUserForm playlist={addUserPlaylist} playlists={playlists} postPlaylistAccessLink={postPlaylistAccessLink}/>
                             : null }
                     </div>
                 </div>

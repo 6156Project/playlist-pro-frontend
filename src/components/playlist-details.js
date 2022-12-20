@@ -31,7 +31,7 @@ function PlaylistDetails(props) {
         //console.log("getMoreSongs with page num: " + newPageNumber)
 
         //props.setSongPageNumber(newPageNumber)
-        API.getSongs(songName)
+        API.getSongs(songName, props.getSongsLink)
         //.then( resp => console.log(resp.at(0)))
         //.then( resp => props.addMoreSongs(resp))
         .then( resp => addSongToPlaylist(resp))
@@ -41,7 +41,7 @@ function PlaylistDetails(props) {
     const addSongToPlaylist = (resp) => {
         var song = resp.at(0)
         console.log(song)
-        API.addSongtoPlaylist(props.playlist.id, song)
+        API.addSongtoPlaylist(props.playlist.id, song, props.postPlaylistSongsLink)
         .then( resp => {
             console.log(resp)
             props.setUseEffectFlag(true)

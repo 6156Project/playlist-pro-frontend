@@ -14,7 +14,7 @@ function PlaylistForm(props) {
 
     const updateClicked = () => {
         console.log("Update pressed")
-        API.updatePlaylist(props.playlist.id, {name})
+        API.updatePlaylist(props.playlist.id, {name}, props.putPlaylistLink)
          .then( resp => props.updatedPlaylist(resp))
          .catch( error => console.log(error))
     }
@@ -26,7 +26,9 @@ function PlaylistForm(props) {
         API.addPlaylist({
             id: props.playlists.length + 1,
             name: name
-        })
+        }, 
+            props.postPlaylistLink
+        )
          .then( resp => props.playlistCreated(resp))
          .catch( error => console.log(error))
     }

@@ -35,9 +35,9 @@ export default class API {
     }
 
 
-    static async getPlaylistsWithPagination(limit, offset) {
+    static async getPlaylistsWithPagination(limit, offset, link) {
         API.showSpinner();
-        const response = await fetch(`${baseUrl}api/playlists?limit=${limit}&offset=${offset}`, {
+        const response = await fetch(`${baseUrl}${link}?limit=${limit}&offset=${offset}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -48,9 +48,9 @@ export default class API {
         return json;
     }
 
-    static async getSongs(songName) {
+    static async getSongs(songName, link) {
         API.showSpinner();
-        const response = await fetch(`${baseUrl}api/songs/search?song_name=${songName}`, {
+        const response = await fetch(`${baseUrl}${link}?song_name=${songName}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -61,9 +61,9 @@ export default class API {
         return json;
     }
 
-    static async getSongsWithPagination(selectedPlaylistId, page) {
+    static async getSongsWithPagination(selectedPlaylistId, page, link) {
         API.showSpinner();
-        const response = await fetch(`${baseUrl}api/playlistsongs/${selectedPlaylistId}?page=${page}`, {
+        const response = await fetch(`${baseUrl}${link}/${selectedPlaylistId}?page=${page}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -74,9 +74,9 @@ export default class API {
         return json;
     }
 
-    static async updatePlaylist(selectedPlaylistId, body) {
+    static async updatePlaylist(selectedPlaylistId, body, link) {
         API.showSpinner();
-        const response = await fetch(`${baseUrl}api/playlists/${selectedPlaylistId}`, {
+        const response = await fetch(`${baseUrl}${link}/${selectedPlaylistId}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json'
@@ -88,10 +88,10 @@ export default class API {
         return json;
     }
 
-    static async addPlaylist(body) {
+    static async addPlaylist(body, link) {
         console.log(body)
         API.showSpinner();
-        const response = await fetch(`${baseUrl}api/playlists`, {
+        const response = await fetch(`${baseUrl}${link}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -103,10 +103,10 @@ export default class API {
         return json;
     }
 
-    static async addSongtoPlaylist(playlistId, body) {
+    static async addSongtoPlaylist(playlistId, body, link) {
         console.log(body)
         API.showSpinner();
-        const response = await fetch(`${baseUrl}api/playlistsongs/${playlistId}`, {
+        const response = await fetch(`${baseUrl}${link}/${playlistId}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -118,9 +118,9 @@ export default class API {
         return json;
     }
 
-    static async addUsertoPlaylist(playlistId, user) {
+    static async addUsertoPlaylist(playlistId, user, link) {
         API.showSpinner();
-        const response = await fetch(`${baseUrl}api/playlistaccess/${playlistId}/add/${user}`, {
+        const response = await fetch(`${baseUrl}${link}/${playlistId}/add/${user}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -131,9 +131,9 @@ export default class API {
         return json;
     }
 
-    static async deletePlaylist(playlistId) {
+    static async deletePlaylist(playlistId, link) {
         API.showSpinner();
-        const response = await fetch(`${baseUrl}api/playlists/${playlistId}`, {
+        const response = await fetch(`${baseUrl}${link}/${playlistId}`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json'

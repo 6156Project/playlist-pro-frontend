@@ -10,7 +10,7 @@ function PlaylistUserForm(props) {
 
     const addUserPressed = () => {
         console.log("Update pressed")
-        API.addUsertoPlaylist(props.playlist.id, name)
+        API.addUsertoPlaylist(props.playlist.id, name, props.postPlaylistAccessLink)
          .then( resp => console.log("success resp:", resp))
          .catch( error => console.log(error))
     }
