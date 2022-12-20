@@ -31,7 +31,12 @@ function Home() {
     const [songPageNumber, setSongPageNumber] = useState(1);
     //const [token, setToken] = useState(false);
 
+    // Set this to true whenever useEffect needs to be called so page gets refreshed
+    const [useEffectFlag, setUseEffectFlag] = useState(false);
+
     useEffect(()=> {
+        setUseEffectFlag(false)
+
         console.log(page)
         console.log(offset)
         console.log(maxPlaylistLength)
@@ -73,7 +78,7 @@ function Home() {
         // API.getSongs(selectedPlaylistId)
         // .then( resp => setSelectedPlaylistSongs(resp))
         // .catch( error => console.log(error))
-    }, [selectedPlaylistId, offset, page])
+    }, [selectedPlaylistId, offset, page, maxPlaylistLength, useEffectFlag])
 
     const addUser = playlist => {
         console.log(playlist)
@@ -128,12 +133,9 @@ function Home() {
     }
 
     const updatedPlaylist = playlist => {
-        // Since playlist is updated in DB, we can just
-        // re-get all the playlists from DB again to get
-        // updated list. This refreshes entire page for us
-        API.getPlaylistsWithPagination(limit, offset)
-            .then( resp => setPlaylists(resp))
-            .catch( error => console.log(error))
+        // Modify one of the useEffect state vars
+        // so that useEffect gets called and grabs all the playlists again
+        setUseEffectFlag(true)
     }
 
     const newPlaylist = () => {
@@ -143,12 +145,9 @@ function Home() {
     }
 
     const playlistCreated = playlist => {
-        // Since playlist is added in DB, we can just
-        // re-get all the playlists from DB again to get
-        // updated list. This refreshes entire page for us
-        API.getPlaylistsWithPagination(limit, offset)
-            .then( resp => setPlaylists(resp))
-            .catch( error => console.log(error))
+        // Modify one of the useEffect state vars
+        // so that useEffect gets called and grabs all the playlists again
+        setUseEffectFlag(true)
     }
 
     const addMoreSongs = song => {
@@ -160,12 +159,9 @@ function Home() {
     }
 
     const removeClicked = playlist => {
-        // Since playlist is removed in DB, we can just
-        // re-get all the playlists from DB again to get
-        // updated list. This refreshes entire page for us
-        API.getPlaylistsWithPagination(limit, offset)
-            .then( resp => setPlaylists(resp))
-            .catch( error => console.log(error))
+        // Modify one of the useEffect state vars
+        // so that useEffect gets called and grabs all the playlists again
+        setMaxPlaylistLength(maxPlaylistLength - 1)
     }
 
     const logoutClicked = () => {
