@@ -42,7 +42,14 @@ function PlaylistDetails(props) {
         var song = resp.at(0)
         console.log(song)
         API.addSongtoPlaylist(props.playlist.id, song)
-        .then( resp => console.log(resp))
+        .then( resp => {
+            console.log(resp)
+            props.setUseEffectFlag(true)
+            // After adding song to playlist, need to reclick the playlist so it displays new songs
+            console.log("Clicking playlist")
+            console.log(props.playlist)
+            props.playlistClicked(props.playlist)
+        })
         .catch( error => console.log(error))
     }
 
