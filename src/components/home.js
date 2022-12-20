@@ -108,12 +108,12 @@ function Home() {
         setSelectedPlaylistId(playlist.id);
         setEditedPlaylist(null);
         setAddUserVar(null);
-        console.log(selectedPlaylistId)
+        console.log(playlist.id)
 
         // using pagination, get songs from the selected playlist
-        if (selectedPlaylistId !== null) {
+        if (playlist.id !== null) {
         setSongPageNumber(1) // reset page num to 1
-            API.getSongsWithPagination(selectedPlaylistId, songPageNumber)
+            API.getSongsWithPagination(playlist.id, songPageNumber)
                 .then( resp => addMoreSongs(resp.body))
                 .catch( error => console.log(error))
         }
