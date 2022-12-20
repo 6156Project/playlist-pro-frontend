@@ -55,7 +55,7 @@ function Home() {
         let pageRightButton = document.getElementById("pageRightButton")
         // This first part of the if statement is needed for when DOM is just initialized
         // Otherwise button will be greyed out at first render
-        if ((page == 0 && offset == 0 && maxPlaylistLength == 0) || (offset < (maxPlaylistLength - limit))) {
+        if ((page === 0 && offset === 0 && maxPlaylistLength === 0) || (offset < (maxPlaylistLength - limit))) {
             pageRightButton.style.pointerEvents = "auto";
             pageRightButton.style.backgroundColor = "green";
             pageRightButton.style.textDecoration = "none";
@@ -78,7 +78,7 @@ function Home() {
         // API.getSongs(selectedPlaylistId)
         // .then( resp => setSelectedPlaylistSongs(resp))
         // .catch( error => console.log(error))
-    }, [selectedPlaylistId, offset, page, maxPlaylistLength, useEffectFlag])
+    }, [selectedPlaylistId, offset, page, maxPlaylistLength, useEffectFlag, selectedPlaylist])
 
     const addUser = playlist => {
         console.log(playlist)
@@ -198,7 +198,9 @@ function Home() {
                         </div>
                     </div>
                     <div className="layout-right">
-                        <PlaylistDetails playlist={selectedPlaylist} playlistSongs={selectedPlaylistSongs} songPageNumber={songPageNumber} setSongPageNumber={setSongPageNumber} />
+                        <PlaylistDetails playlist={selectedPlaylist} playlistSongs={selectedPlaylistSongs}
+                                         songPageNumber={songPageNumber} setSongPageNumber={setSongPageNumber}
+                                         setUseEffectFlag={setUseEffectFlag} playlistClicked={playlistClicked}/>
                         { editedPlaylist ?
                             <PlaylistForm playlist={editedPlaylist} playlists={playlists} updatedPlaylist={updatedPlaylist} playlistCreated={playlistCreated}/>
                             : null }
