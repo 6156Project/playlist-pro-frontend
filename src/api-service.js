@@ -131,6 +131,32 @@ export default class API {
         return json;
     }
 
+    static async checkUserAccessOnPlaylist(playlistId, user, link) {
+        API.showSpinner();
+        const response = await fetch(`${baseUrl}${link}/${playlistId}/access/${user}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        const json = await response.json();
+        API.hideSpinner();
+        return json;
+    }
+
+    static async deleteUserAccessOnPlaylist(playlistId, user, link) {
+        API.showSpinner();
+        const response = await fetch(`${baseUrl}${link}/${playlistId}/remove/${user}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        const json = await response.json();
+        API.hideSpinner();
+        return json;
+    }
+
     static async deletePlaylist(playlistId, link) {
         API.showSpinner();
         const response = await fetch(`${baseUrl}${link}/${playlistId}`, {

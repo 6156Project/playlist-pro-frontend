@@ -115,14 +115,14 @@
   display: block;
 }
 
-#songName {
+#songName, #userNameAccess, #userNameDeletion {
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 20rem;
 }
 
-#getMoreSongsButton {
+#getMoreSongsButton, #checkUserAccessButton, #userNameDeletionButton {
   /*Defaults to none but*/
   /*when a valid song is inputted*/
   /*it becomes set to auto via JS*/

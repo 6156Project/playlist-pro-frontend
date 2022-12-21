@@ -6,6 +6,8 @@ import API from "../api-service";
 function PlaylistDetails(props) {
 
     const [songName, setSongName] = useState('');
+    const [userNameAccess, setUserNameAccess] = useState('');
+    const [userNameDeletion, setUserNameDeletion] = useState('');
 
     const addingSongsLogic = (event) => {
         let songName = event.target.value
@@ -22,6 +24,44 @@ function PlaylistDetails(props) {
             addSongButton.style.pointerEvents = "auto";
             addSongButton.style.backgroundColor = "green";
             addSongButton.style.textDecoration = "none";
+        }
+        console.log("Done.");
+    }
+
+    const userAccessCheckLogic = (event) => {
+        let userNameAccess = event.target.value
+        let checkUserAccessButton = document.getElementById("checkUserAccessButton")
+        setUserNameAccess(userNameAccess)
+
+        if (userNameAccess.length <= 0) {
+            console.log("User name not long enough");
+            checkUserAccessButton.style.pointerEvents = "none";
+            checkUserAccessButton.style.backgroundColor = "gray";
+            checkUserAccessButton.style.textDecoration = "line-through";
+        } else {
+            console.log("User name valid.");
+            checkUserAccessButton.style.pointerEvents = "auto";
+            checkUserAccessButton.style.backgroundColor = "green";
+            checkUserAccessButton.style.textDecoration = "none";
+        }
+        console.log("Done.");
+    }
+
+    const userNameDeletionLogic = (event) => {
+        let userNameDeletion = event.target.value
+        let userNameDeletionButton = document.getElementById("userNameDeletionButton")
+        setUserNameDeletion(userNameDeletion)
+
+        if (userNameDeletion.length <= 0) {
+            console.log("User name not long enough");
+            userNameDeletionButton.style.pointerEvents = "none";
+            userNameDeletionButton.style.backgroundColor = "gray";
+            userNameDeletionButton.style.textDecoration = "line-through";
+        } else {
+            console.log("User name valid.");
+            userNameDeletionButton.style.pointerEvents = "auto";
+            userNameDeletionButton.style.backgroundColor = "green";
+            userNameDeletionButton.style.textDecoration = "none";
         }
         console.log("Done.");
     }
@@ -53,10 +93,28 @@ function PlaylistDetails(props) {
         .catch( error => console.log(error))
     }
 
+    const checkUserAccess = (resp) => {
+        API.checkUserAccessOnPlaylist(props.playlist.id, userNameAccess, props.postPlaylistAccessLink)
+            .then( resp => {
+                console.log("success resp:", resp)
+                document.getElementById("checkUserAccessP").innerHTML = "User name: " + userNameAccess + " has access? = " + resp
+            })
+            .catch( error => console.log(error))
+    }
+
+    const userNameDeletionCall = (resp) => {
+        API.deleteUserAccessOnPlaylist(props.playlist.id, userNameDeletion, props.postPlaylistAccessLink)
+            .then( resp => {
+                console.log("success resp:", resp)
+                document.getElementById("userNameDeletionP").innerHTML = "User name: " + userNameDeletion + " was deleted? = " + resp
+            })
+            .catch( error => console.log(error))
+    }
+
     return (
         <React.Fragment>
             {props.playlist ? (
-            <div>
+            <div id="playlistDetailsDiv">
                 <h1>Selected Playlist:<br/>{props.playlist.name}</h1><br/>
                     { props.playlistSongs && props.playlistSongs.map( song => {
                       return (
@@ -70,10 +128,33 @@ function PlaylistDetails(props) {
                       )
                     })}
                     <br/><br/>
+
+
                 <input id="songName" type="text" placeholder="Song Name to Fetch" value={songName}
                     onChange={ event => addingSongsLogic(event) }
                 />
                 <div id="getMoreSongsButton" className="App-button" onClick={getMoreSongs}><FontAwesomeIcon icon={faPlus}/> Fetch more songs</div>
+                <br/>
+                <br/>
+                <br/>
+
+
+                <input id="userNameAccess" type="text" placeholder="User Name To Check" value={userNameAccess}
+                       onChange={ event => userAccessCheckLogic(event) }
+                />
+                <div id="checkUserAccessButton" className="App-button" onClick={checkUserAccess}><FontAwesomeIcon icon={faPlus}/> Check User Access</div>
+                <p id="checkUserAccessP"></p>
+                <br/>
+                <br/>
+
+
+                <input id="userNameDeletion" type="text" placeholder="User Name To Delete" value={userNameDeletion}
+                       onChange={ event => userNameDeletionLogic(event) }
+                />
+                <div id="userNameDeletionButton" className="App-button" onClick={userNameDeletionCall}><FontAwesomeIcon icon={faPlus}/> Remove User Access</div>
+                <p id="userNameDeletionP"></p>
+                <br/>
+                <br/>
             </div>
             ): null}
         </React.Fragment >

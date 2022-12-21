@@ -251,7 +251,8 @@ function Home() {
                         <PlaylistDetails playlist={selectedPlaylist} playlistSongs={selectedPlaylistSongs}
                                          songPageNumber={songPageNumber} setSongPageNumber={setSongPageNumber}
                                          setUseEffectFlag={setUseEffectFlag} playlistClicked={playlistClicked}
-                                         getSongsLink={getSongsLink} postPlaylistSongsLink={postPlaylistSongsLink}/>
+                                         getSongsLink={getSongsLink} postPlaylistSongsLink={postPlaylistSongsLink}
+                                         postPlaylistAccessLink={postPlaylistAccessLink} />
                         { editedPlaylist ?
                             <PlaylistForm playlist={editedPlaylist} playlists={playlists} updatedPlaylist={updatedPlaylist} playlistCreated={playlistCreated}
                                 postPlaylistLink={postPlaylistLink} putPlaylistLink={putPlaylistLink}/>
