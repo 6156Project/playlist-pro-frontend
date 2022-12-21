@@ -26,6 +26,12 @@
 16. Try checking its access again, and now it should return false since it was just deleted.
 17. Delete the playlist.
 18. Click logout.
+19. Visit AWS console, and go to Lambda cloudwatch logs.
+20. Search for this newly created playlist name you just deleted. You should find one request where it appears as a POST
+21. Check that metrics were successfully published for it
+22. Visit cloudwatch metrics dashboard -> "Metrics" -> "All metrics" -> Browse -> ProPlaylistPlaylistMetrics
+23. From here, can click on "Query" and try different things like SUM of all POST requests Group By any metric.
+24. Done.
 
 
 # Getting Started with Create React App
