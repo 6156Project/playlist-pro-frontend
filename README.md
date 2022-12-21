@@ -4,6 +4,9 @@
 3. then build `npm run build`
 4. then start the server `npm start`. See other commands below.
 
+## Screenshot of home page
+![](src/assets/readme.png)
+
 ## Sanity checking steps
 1. With network tab open, enter website with localhost:3000/login, or https://d39qy3qhpapskf.cloudfront.net/login
 2. Login with Google using a gmail account.
