@@ -1,9 +1,10 @@
 import React from 'react';
 import API  from '../api-service';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-    faArrowRight
-} from "@fortawesome/free-solid-svg-icons";
+
+import googleButton from '../assets/signinGooglebutton.png';
+import musicLogo from '../assets/musicLogo.jpg';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faArrowLeft, faArrowRight, faMusic, faPlus} from '@fortawesome/free-solid-svg-icons';
 
 
 function Login() {
@@ -26,11 +27,13 @@ function Login() {
         <div className="App-background">
             <div className="App">
                 <header className="App-header">
-                    <h1>Login Page</h1>
+                    <div id="playlistProLogo"><img src={ musicLogo } alt="Playlist Pro Logo" /></div>
+                    <h1><FontAwesomeIcon icon={faMusic} /> Welcome to Playlist Pro! <FontAwesomeIcon icon={faMusic} /></h1>
+                    <p>You are not signed in... please sign in with the button below to access.</p>
                 </header>
                 <div className="horizontal-rule"></div>
                 <div className="login-button">
-                    <div className="App-button" onClick={loginClicked}><FontAwesomeIcon icon={faArrowRight}/> Login in with Google</div>
+                    <div id="googleButton" onClick={loginClicked}><img src={ googleButton } alt="Sign in with Google" /></div>
                 </div>
             </div>
         </div>
