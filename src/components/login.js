@@ -4,7 +4,7 @@ import API  from '../api-service';
 import googleButton from '../assets/signinGooglebutton.png';
 import musicLogo from '../assets/musicLogo.jpg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faArrowLeft, faArrowRight, faMusic, faPlus} from '@fortawesome/free-solid-svg-icons';
+import { faMusic } from '@fortawesome/free-solid-svg-icons';
 
 
 function Login() {
