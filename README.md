@@ -4,6 +4,27 @@
 3. then build `npm run build`
 4. then start the server `npm start`. See other commands below.
 
+## Sanity checking steps
+1. With network tab open, enter website with localhost:3000/login, or https://d39qy3qhpapskf.cloudfront.net/login
+2. Login with Google using a gmail account.
+3. You should be redirected to the Playlist Pro index page. Verify there is query params in the URL and your user name info is shown.
+4. Click page right all, and click random playlists. Some of them will have songs. Do this til the last page is reached.
+5. Click page left all the way to the left.
+6. Click "New Playlist" and enter some Playlist name.
+7. Scroll through pages til you find your new playlist. Click on it.
+8. Enter a song name to fetch and click the fetch more songs button. Page should be refreshed with new song.
+9. Add one more song.
+10. Click out of the playlist to another. Then click back to your new playlist to verify the storing is happening correctly.
+11. with your new playlist, rename it. Click out, then click back into it.
+12. Click the "user" button on the new playlist, and add a new user to have access to it. You should see a status message appear that says "true".
+13. Click the new playlist, and check user access for that newly added user. It should return true.
+14. Check user access for a non-existent user. It should return false.
+15. Now remove user access for this new user. It should return true.
+16. Try checking its access again, and now it should return false since it was just deleted.
+17. Delete the playlist.
+18. Click logout.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
