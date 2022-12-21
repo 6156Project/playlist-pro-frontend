@@ -57,7 +57,7 @@ function Home() {
         // Check which page to render. If it's after login, call login callback
         let currentWindow = window.location.href
         let queryParams = currentWindow.split("?").pop()
-        if (currentWindow == queryParams) {
+        if (currentWindow === queryParams) {
             console.log("Not the login callback")
         } else {
             console.log("Is the login callback")
