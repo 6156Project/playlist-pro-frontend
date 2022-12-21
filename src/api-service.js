@@ -157,6 +157,19 @@ export default class API {
         return json;
     }
 
+    static async loginCallback(queryParams) {
+        API.showSpinner();
+        const response = await fetch(`${baseUrl}login/callback?` + queryParams, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        const json = await response.json();
+        API.hideSpinner();
+        return json;
+    }
+
     static async logout() {
         API.showSpinner();
         const response = await fetch(`${baseUrl}logout`, {

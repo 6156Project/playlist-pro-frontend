@@ -7,6 +7,8 @@ import PlaylistUserForm from './playlist-user-form';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faArrowLeft, faArrowRight, faMusic, faPlus} from '@fortawesome/free-solid-svg-icons';
 import API from '../api-service';
+import { Link } from "react-router-dom";
+
 //import Login from "./login";
 
 function Home() {
@@ -41,15 +43,32 @@ function Home() {
     const [postPlaylistSongsLink, setPostPlaylistSongsLink] = useState(null)
     const [postPlaylistAccessLink, setPostPlaylistAccessLink] = useState(null)
 
+    // Set defaults so logic doesn't break
+    const [email, setEmail] = useState("test@test.com")
+    const [name, setName] = useState("John Doe")
+    const [userID, setUserID] = useState("1234567890")
+
     // Set this to true whenever useEffect needs to be called so page gets refreshed
     const [useEffectFlag, setUseEffectFlag] = useState(false);
 
     useEffect(()=> {
         setUseEffectFlag(false)
 
-        console.log(page)
-        console.log(offset)
-        console.log(maxPlaylistLength)
+        // Check which page to render. If it's after login, call login callback
+        let currentWindow = window.location.href
+        let queryParams = currentWindow.split("?").pop()
+        if (currentWindow == queryParams) {
+            console.log("Not the login callback")
+        } else {
+            console.log("Is the login callback")
+            API.loginCallback(queryParams)
+                .then( resp => {
+                    setUserID(resp.userID)
+                    setEmail(resp.email)
+                    setName(resp.name)
+                })
+                .catch( error => console.log(error))
+        }
 
         // Logic so that buttons are greyed out if not clickable.
         let pageLeftButton = document.getElementById("pageLeftButton")
@@ -185,11 +204,11 @@ function Home() {
         setMaxPlaylistLength(maxPlaylistLength - 1)
     }
 
-    const logoutClicked = () => {
-        API.logout()
-            //.then(() => setToken(false))
-            .catch(() => console.log())
-    }
+    // const logoutClicked = () => {
+    //     API.logout()
+    //         .then(() => setToken(false))
+    //         .catch(() => console.log())
+    // }
 
 
     //if(!token) {
@@ -202,7 +221,16 @@ function Home() {
                 <header className="App-header">
                     <div className="header-content">
                         <h1><FontAwesomeIcon icon={faMusic} /> Playlist Pro</h1>
-                        <div className="logout-button"> <div className="App-button" onClick={ logoutClicked }><FontAwesomeIcon icon={faArrowRight}/> Logout</div> </div>
+                        <div className="logout-button">
+                            <div className="App-button" >
+                                <Link id="logoutLink" to="/logout" state={{nameState: {name}, emailState: {email}, userIDState: {userID}}}><FontAwesomeIcon icon={faArrowRight}/> Logout</Link>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="header-content">
+                        <div className="textClass">Welcome <div className="importantText">{name}!</div></div>
+                        <div className="textClass">You are logged in with email: <div className="importantText">{email}</div></div>
+                        <div className="textClass">Your user ID is: <div className="importantText">{userID}</div></div>
                     </div>
                 </header>
                 <div className="horizontal-rule"></div>

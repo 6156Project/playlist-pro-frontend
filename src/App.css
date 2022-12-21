@@ -157,6 +157,23 @@
   font-style: italic;
 }
 
+.textClass {
+  font-size: 35px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.importantText {
+  font-style: italic;
+  color: green;
+}
+
+#logoutLink {
+  color: white;
+  text-decoration: none;
+}
+
 /* source for side bar animations: https://www.gradient-animator.com/ */
 .App-background {
   background: linear-gradient(237deg, #14a42a, #1faed4);

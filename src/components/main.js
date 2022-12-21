@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Home from './home'
 import Login from './login'
+import Logout from './logout'
 
 // The Main component renders one of the three provided
 // Routes (provided that one matches). Both the /roster
@@ -14,6 +15,7 @@ function Main() {
             <Routes>
                 <Route exact path="/" element={<Home/>}/>
                 <Route exact path="/login" element={<Login/>}/>
+                <Route exact path="/logout" element={<Logout/>}/>
             </Routes>
         </main>
     );

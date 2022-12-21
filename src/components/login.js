@@ -26,7 +26,7 @@ function Login() {
         <div className="App-background">
             <div className="App">
                 <header className="App-header">
-                    <h1>Login </h1>
+                    <h1>Login Page</h1>
                 </header>
                 <div className="horizontal-rule"></div>
                 <div className="login-button">
