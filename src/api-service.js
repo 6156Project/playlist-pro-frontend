@@ -157,6 +157,21 @@ export default class API {
         return json;
     }
 
+    static async getPlaylistAccessInfo(link) {
+        console.log("Calling getPlaylistAccessInfo")
+        API.showSpinner();
+        const response = await fetch(`${baseUrl}${link}/info`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        const json = await response.json();
+        console.log(json)
+        API.hideSpinner();
+        return json;
+    }
+
     static async deletePlaylist(playlistId, link) {
         API.showSpinner();
         const response = await fetch(`${baseUrl}${link}/${playlistId}`, {

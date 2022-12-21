@@ -47,6 +47,7 @@ function Home() {
     const [email, setEmail] = useState("test@test.com")
     const [name, setName] = useState("John Doe")
     const [userID, setUserID] = useState("1234567890")
+    const [selectedPlaylistUsers, setSelectedPlaylistUsers] = useState([])
 
     // Set this to true whenever useEffect needs to be called so page gets refreshed
     const [useEffectFlag, setUseEffectFlag] = useState(false);
@@ -161,6 +162,10 @@ function Home() {
             API.getSongsWithPagination(playlist.id, songPageNumber, getPlaylistSongsLink)
                 .then( resp => addMoreSongs(resp.body))
                 .catch( error => console.log(error))
+            API.getPlaylistAccessInfo(postPlaylistAccessLink)
+                .then( accessResp => storeUsersAccessInfo(accessResp, playlist.id))
+                .then( accessError => console.log(accessError))
+
         }
     }
 
@@ -196,6 +201,26 @@ function Home() {
         const newSongs = song.songs;
         setSelectedPlaylistSongs(newSongs)
         console.log(newSongs)
+    }
+
+    const storeUsersAccessInfo = (body, playlistId) => {
+        let allUsersAccessInfo = Object.values(body)
+        console.log(allUsersAccessInfo)
+        console.log(playlistId)
+
+        let selectedPlaylistUsersInfo = []
+        allUsersAccessInfo.forEach(info => {
+            if (info.playlistId === playlistId) {
+                // From list of all access infos, if the IDs match
+                // then this info corresponds to this playlist ID.
+                selectedPlaylistUsersInfo.push(info)
+            }
+        })
+        setSelectedPlaylistUsers(selectedPlaylistUsersInfo)
+        console.log("Just set this list of users")
+        console.log(selectedPlaylistUsersInfo)
+        console.log("For this playlist ID")
+        console.log(playlistId)
     }
 
     const removeClicked = playlist => {
@@ -252,7 +277,7 @@ function Home() {
                                          songPageNumber={songPageNumber} setSongPageNumber={setSongPageNumber}
                                          setUseEffectFlag={setUseEffectFlag} playlistClicked={playlistClicked}
                                          getSongsLink={getSongsLink} postPlaylistSongsLink={postPlaylistSongsLink}
-                                         postPlaylistAccessLink={postPlaylistAccessLink} />
+                                         postPlaylistAccessLink={postPlaylistAccessLink} playlistUsers={selectedPlaylistUsers} />
                         { editedPlaylist ?
                             <PlaylistForm playlist={editedPlaylist} playlists={playlists} updatedPlaylist={updatedPlaylist} playlistCreated={playlistCreated}
                                 postPlaylistLink={postPlaylistLink} putPlaylistLink={putPlaylistLink}/>

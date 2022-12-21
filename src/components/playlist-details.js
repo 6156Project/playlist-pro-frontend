@@ -98,6 +98,7 @@ function PlaylistDetails(props) {
             .then( resp => {
                 console.log("success resp:", resp)
                 document.getElementById("checkUserAccessP").innerHTML = "User name: " + userNameAccess + " has access? = " + resp
+                // don't need to call anything since its not modifying anything. just checking access
             })
             .catch( error => console.log(error))
     }
@@ -107,6 +108,12 @@ function PlaylistDetails(props) {
             .then( resp => {
                 console.log("success resp:", resp)
                 document.getElementById("userNameDeletionP").innerHTML = "User name: " + userNameDeletion + " was deleted? = " + resp
+                console.log(resp)
+                props.setUseEffectFlag(true)
+                // After adding song to playlist, need to reclick the playlist so it displays new songs
+                console.log("Clicking playlist")
+                console.log(props.playlist)
+                props.playlistClicked(props.playlist)
             })
             .catch( error => console.log(error))
     }
@@ -116,6 +123,7 @@ function PlaylistDetails(props) {
             {props.playlist ? (
             <div id="playlistDetailsDiv">
                 <h1>Selected Playlist:<br/>{props.playlist.name}</h1><br/>
+                <h2>Song List</h2>
                     { props.playlistSongs && props.playlistSongs.map( song => {
                       return (
                         <div key={song.song_id}>
@@ -128,8 +136,17 @@ function PlaylistDetails(props) {
                       )
                     })}
                     <br/><br/>
+                <h2>User Access List</h2>
+                { props.playlistUsers && props.playlistUsers.map( user => {
+                    return (
+                        <div key={user.userId}>
+                            <p><b>User: {user.userId}</b></p>
+                        </div>
+                    )
+                })}
+                <br/><br/>
 
-
+                <h2>Buttons</h2>
                 <input id="songName" type="text" placeholder="Song Name to Fetch" value={songName}
                     onChange={ event => addingSongsLogic(event) }
                 />
