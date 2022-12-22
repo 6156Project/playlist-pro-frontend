@@ -21,6 +21,7 @@
 11. with your new playlist, rename it. Click out, then click back into it.
 12. Click the "user" button on the new playlist, and add a new user to have access to it. You should see a status message appear that says "true".
 13. Click the new playlist, and check user access for that newly added user. It should return true.
+17. You should see list of all users that have access to the playlist also.
 14. Check user access for a non-existent user. It should return false.
 15. Now remove user access for this new user. It should return true.
 16. Try checking its access again, and now it should return false since it was just deleted.
